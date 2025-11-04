@@ -1,0 +1,13 @@
+header {
+    width: 100%;
+    padding-top: 12px;
+    padding-left: 15px;
+    background: #0052B4;
+}
+
+header h1 {
+    font-family: sans-serif;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+}

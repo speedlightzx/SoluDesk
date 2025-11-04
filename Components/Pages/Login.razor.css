@@ -1,0 +1,65 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-height: 80vh;
+    height: 100%;
+}
+
+p {
+    position: absolute;
+    left: 15px;
+    bottom: 10px;
+    color: #0052B4;
+    font-family: sans-serif;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.containerLogin {
+    display: flex;
+    flex-direction: column;
+}
+
+.containerLogin h1 {
+    color: #0052B4;
+    font-family: sans-serif;
+    margin-bottom: 25px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.containerLogin form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.containerLogin form input {
+    border-radius: 20px;
+    border: 2.7px solid #0052B4;
+    width: 50vh;
+    padding-right: 8px;
+    padding-left: 4px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+.containerLogin form input[type="submit"] {
+    margin-top: 15px;
+    background: #0052B4;
+    border-radius: 20px;
+    max-width: 15vh;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.containerLogin form input::placeholder {
+    color: #0052B4;
+    font-weight: bolder;
+    text-align: left;
+    font-size: 15px;
+}
