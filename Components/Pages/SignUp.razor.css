@@ -7,22 +7,12 @@
     height: 100%;
 }
 
-p {
-    position: absolute;
-    left: 15px;
-    bottom: 10px;
-    color: #0052B4;
-    font-family: sans-serif;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.containerLogin {
+.containerSignUp {
     display: flex;
     flex-direction: column;
 }
 
-.containerLogin h1 {
+.containerSignUp h1 {
     color: #0052B4;
     font-family: sans-serif;
     margin-bottom: 25px;
@@ -30,14 +20,20 @@ p {
     text-align: center;
 }
 
-.containerLogin form {
+.containerSignUp form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.required {
     display: flex;
     flex-direction: column;
     gap: 10px;
     align-items: center;
 }
 
-.containerLogin form input {
+.required input {
     border-radius: 20px;
     border: 2.7px solid #0052B4;
     width: 50vh;
@@ -47,8 +43,7 @@ p {
     padding-bottom: 7px;
 }
 
-.containerLogin form input[type="submit"] {
-    margin-top: 15px;
+.submitButtons input {
     background: #0052B4;
     border-radius: 20px;
     max-width: 17vh;
@@ -56,11 +51,38 @@ p {
     color: white;
     font-size: 20px;
     cursor: pointer;
+    border: 2.7px solid #0052B4;
+    gap: 10px;
+    padding: 10px;
+    text-align: center;
 }
 
-.containerLogin form input::placeholder {
+.submitButtons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.containerSignUp form input::placeholder {
     color: #0052B4;
     font-weight: bolder;
     text-align: left;
     font-size: 15px;
+}
+
+.terms {
+    display: flex;
+    justify-items: center;
+    gap: 5px;
+}
+
+.terms label {
+    font-family: sans-serif;
+    color: #0052B4;
+    font-size: 14px;
+    font-weight: lighter;
+}
+
+.terms input {
+    accent-color: #0052B4;
 }
