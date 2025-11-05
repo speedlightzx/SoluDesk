@@ -1,0 +1,143 @@
+.container {
+    height: 100%;
+}
+
+.principal {
+    width: 100%;
+    height: 91%;
+    background: #0052B4;
+}
+
+.search {
+    width: 100%;
+    height: 88%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.search label {
+    font-size: 40px;
+    font-family: sans-serif;
+    color: white;
+    font-weight: bold;
+}
+
+.search div {
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+.search div input {
+    width: 50vh;
+    padding: 6px 27px 6px 6px;
+    border-radius: 15px;
+    border: solid transparent;
+}
+
+.search div img {
+    max-width: 20px;
+    max-height: 20px;
+    position: absolute;
+    right: 8px;
+}
+
+.termsAndUse {
+    align-items: end;
+    height: 12%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 10px 10px 10px;
+}
+
+.termsAndUse p {
+    color: white;
+    font-family: sans-serif;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* NAO ENCONTROU O QUE PRECISAVA */
+
+.problemNotFound {
+    display: flex;
+    flex-direction: column;
+    border-top: 3px solid white;
+    height: 50%;
+}
+
+.notFoundText {
+    background: #0052B4;
+}
+
+.problemNotFound h1 {
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+    padding: 15px 0px 15px 0px;
+}
+
+.support {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.support h1 {
+    color: #0052B4;
+    font-family: sans-serif;
+    font-weight: bolder;
+    font-size: 26px;
+    text-align: center;
+}
+
+.support div {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    border: 1.5px solid #0052B4;
+    border-radius: 3px;
+}
+
+.support div input {
+    padding: 6px 0px 6px 6px;
+    border: 1.5px solid #0052B4;
+}
+
+.support div textarea {
+    height: 10vh;
+    resize: none;
+    border: 1.5px solid #0052B4;
+    padding: 6px 0px 6px 6px;
+}
+
+.support div textarea::placeholder {
+    color: #0052B4;
+    font-weight: lighter;
+    font-family: sans-serif;
+}
+
+.support div input::placeholder {
+    color: #0052B4;
+    font-weight: lighter;
+}
+
+.support button {
+    margin-top: 15px;
+    max-width: 12vh;
+    width: 100%;
+    border: 2.7px solid #0052B4;
+    border-radius: 15px;
+    background: #0052B4;
+    padding: 7px 0px 7px 0px;
+    color: white;
+    font-family: sans-serif;
+    font-size: 20px;
+    cursor: pointer;
+}

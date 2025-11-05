@@ -1,0 +1,35 @@
+header {
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background: #0052B4;
+    border-bottom: 3px solid white;
+    display: flex;
+    justify-content: space-between;
+}
+
+header h1 {
+    font-family: sans-serif;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    align-self: center;
+}
+
+header button {
+    text-align: center;
+    padding: 18px 7px 18px 7px;
+    border: 1px solid white;
+    border-radius: 10px;
+    color: white;
+    background: transparent;
+    cursor: pointer;
+}
+
+header button h1 {
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+}
