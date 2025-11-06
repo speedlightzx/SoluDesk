@@ -26,9 +26,6 @@ header button {
     color: white;
     background: transparent;
     cursor: pointer;
-}
-
-header button h1 {
     font-family: sans-serif;
     font-weight: bold;
     font-size: 18px;

@@ -1,0 +1,24 @@
+@using System.ComponentModel.DataAnnotations
+@rendermode InteractiveServer
+
+<div class="userChamado" @onclick="Click">
+
+    <h1>@username</h1>
+
+</div>
+
+@code {
+
+    [Parameter]
+    [EditorRequired]
+    [Required]
+    public string username { get; set; }
+
+    [Parameter]
+    public EventCallback OnSelected{ get; set; }
+
+    private async Task Click() 
+    {
+        await OnSelected.InvokeAsync();
+    }
+}

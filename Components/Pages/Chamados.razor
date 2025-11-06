@@ -1,0 +1,42 @@
+@page "/chamados"
+@rendermode InteractiveServer
+
+<header>
+    <div class="buttons">
+        <button id="selectedButton">Meus chamados</button>
+        <button>Central</button>
+    </div>
+
+    <div class="logout">
+        <button>Log out</button>
+    </div>
+</header>
+
+<div class="container">
+    <aside class="chamadosSidebar">
+        <ul>
+            <UserChamado username="componente" OnSelected="selectChamado"></UserChamado>
+            <UserChamado username="pedro" OnSelected="selectChamado"></UserChamado>
+            <UserChamado username="joao" OnSelected="selectChamado"></UserChamado>
+            <UserChamado username="arthur" OnSelected="selectChamado"></UserChamado>
+            <UserChamado username="mekkmk12312" OnSelected="selectChamado"></UserChamado>
+        </ul>
+        @if(showAtribuirChamado) 
+        {
+        <div>
+            <div class="atribuirChamado">
+                <h1>Atribuir o chamado</h1>
+            </div>   
+        </div>
+        }
+    </aside>
+</div>
+
+@code {
+    private bool showAtribuirChamado = false;
+
+    private void selectChamado() 
+    {
+        showAtribuirChamado = true;
+    }
+}

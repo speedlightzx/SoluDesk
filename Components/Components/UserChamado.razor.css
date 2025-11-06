@@ -1,0 +1,11 @@
+.userChamado {
+    border-bottom: 2px solid white;
+    display: flex;
+    width: 100%;
+    font-family: sans-serif;
+    justify-content: center;
+    color: white;
+    font-size: 10px;
+    padding: 4px 0px 4px 0px;
+    cursor: pointer;
+}
