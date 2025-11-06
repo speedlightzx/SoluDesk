@@ -1,24 +1,25 @@
 @using System.ComponentModel.DataAnnotations
 @rendermode InteractiveServer
 
-<div class="userChamado" @onclick="Click">
-
+<div class="userChamado @(selected == username ? "selectedChamado" : "")" @onclick="Click">
     <h1>@username</h1>
-
 </div>
 
 @code {
-
-    [Parameter]
-    [EditorRequired]
-    [Required]
+    [Parameter, EditorRequired, Required]
     public string username { get; set; }
 
+    [Parameter, EditorRequired, Required]
+    public string problemDescription { get; set; }
+
     [Parameter]
-    public EventCallback OnSelected{ get; set; }
+    public EventCallback<(string problemDescription, string username)> OnSelected { get; set; }
+
+    [Parameter]
+    public string? selected { get; set; }
 
     private async Task Click() 
     {
-        await OnSelected.InvokeAsync();
+       await OnSelected.InvokeAsync((problemDescription, username));
     }
 }

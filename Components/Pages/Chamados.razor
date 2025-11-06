@@ -15,11 +15,11 @@
 <div class="container">
     <aside class="chamadosSidebar">
         <ul>
-            <UserChamado username="componente" OnSelected="selectChamado"></UserChamado>
-            <UserChamado username="pedro" OnSelected="selectChamado"></UserChamado>
-            <UserChamado username="joao" OnSelected="selectChamado"></UserChamado>
-            <UserChamado username="arthur" OnSelected="selectChamado"></UserChamado>
-            <UserChamado username="mekkmk12312" OnSelected="selectChamado"></UserChamado>
+            <UserChamado username="componente" selected="@selectedChamadoUsername" problemDescription="teste componente" OnSelected="selectChamado"></UserChamado>
+            <UserChamado username="pedro" selected="@selectedChamadoUsername" problemDescription="teste pedro" OnSelected="selectChamado"></UserChamado>
+            <UserChamado username="joao" selected="@selectedChamadoUsername" problemDescription="teste joao" OnSelected="selectChamado"></UserChamado>
+            <UserChamado username="arthur" selected="@selectedChamadoUsername" problemDescription="teste arthur" OnSelected="selectChamado"></UserChamado>
+            <UserChamado username="mekkmk12312" selected="@selectedChamadoUsername" problemDescription="teste we213232x" OnSelected="selectChamado"></UserChamado>
         </ul>
         @if(showAtribuirChamado) 
         {
@@ -30,13 +30,34 @@
         </div>
         }
     </aside>
+    @if(showAtribuirChamado) 
+    {
+    <div class="chamadoDescription">
+        <div class="chamadoBox">
+            <div class="problem">
+                <p>"Descrição do problema... @problem"</p>
+            </div>
+            <div class="sendResponse">
+                <textarea @bind="response" placeholder="Enviar Resposta"/>
+                <button>Enviar</button>
+            </div>
+        </div>
+    </div>
+    }
 </div>
 
 @code {
     private bool showAtribuirChamado = false;
+    private string problem = string.Empty;
+    private string response = string.Empty;
 
-    private void selectChamado() 
+    private string selectedChamadoUsername = string.Empty;
+
+    private void selectChamado((string problemDescription, string username) data) 
     {
+        selectedChamadoUsername = data.username;
         showAtribuirChamado = true;
+        problem = data.problemDescription;
+        response = string.Empty;
     }
 }

@@ -9,3 +9,8 @@
     padding: 4px 0px 4px 0px;
     cursor: pointer;
 }
+
+.selectedChamado {
+    background: white;
+    color: #0052B4;
+}
