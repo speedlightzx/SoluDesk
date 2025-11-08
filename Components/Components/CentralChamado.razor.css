@@ -49,6 +49,12 @@
     list-style: none;
 }
 
+.dropdown-toggle.show {
+    background: #0052B4;
+    color: white;
+    font-weight: bold;
+}
+
 .dropdown-toggle::after {
     display: none !important;
 }

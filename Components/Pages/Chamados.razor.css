@@ -36,8 +36,8 @@ header {
 
 .logout { 
     display: flex; 
-    justify-content: center; 
-    width: 20%; 
+    justify-content: end; 
+    width: 20%;
 }
 
 .logout button { 
@@ -65,7 +65,7 @@ header {
 }
 
 .chamadosSidebar {
-    width: 35vh;
+    width: 15%;
     height: 100%;
     background: #0052B4;
     display: flex;
@@ -98,7 +98,7 @@ header {
 }
 
 .chamadoDescription {
-    width: 100%;
+    width: 85%;
     height: 100%;
     display: flex;
     padding: 10px;
