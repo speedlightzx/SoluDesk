@@ -52,3 +52,15 @@
 .dropdown-toggle::after {
     display: none !important;
 }
+
+.active {
+    background: #0052B4 !important;
+    border: solid transparent;
+    border-radius: 15px;
+}
+
+.dropdown-item:active {
+    color: white !important;
+    background: #0052B4 !important;
+    border-radius: 15px;
+}

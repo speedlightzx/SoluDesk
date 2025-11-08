@@ -8,11 +8,11 @@
             <h1>@tecnico</h1>
             <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">V</button>
             <ul class="dropdown-menu">
-                <li> <span class="dropdown-item">Allan</span> </li>
-                <li> <span class="dropdown-item">Kaleb</span> </li>
-                <li> <span class="dropdown-item">Igor</span> </li>
-                <li> <span class="dropdown-item">Miguel</span> </li>
-                <li> <span class="dropdown-item">Matheus</span> </li>
+                <li> <span class="dropdown-item @verifySelectedTecnico("Allan")">Allan</span> </li>
+                <li> <span class="dropdown-item @verifySelectedTecnico("Kaleb")">Kaleb</span> </li>
+                <li> <span class="dropdown-item @verifySelectedTecnico("Igor")">Igor</span> </li>
+                <li> <span class="dropdown-item @verifySelectedTecnico("Miguel")">Miguel</span> </li>
+                <li> <span class="dropdown-item @verifySelectedTecnico("Matheus")">Matheus</span> </li>
             </ul>
         </div>
     </td>
@@ -44,4 +44,12 @@
     [EditorRequired] 
     [Required]
     public string priority { get; set; }
+
+    private string verifySelectedTecnico(string name) 
+    {
+
+        if(tecnico.ToLower() == name.ToLower()) return "active";
+
+        return "";
+    }
 }
