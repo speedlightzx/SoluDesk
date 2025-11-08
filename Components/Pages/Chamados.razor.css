@@ -197,4 +197,5 @@ header {
     overflow-y: auto;
     width: 100%;
     table-layout: fixed;
+    overflow: visible !important;
 }

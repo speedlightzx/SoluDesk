@@ -4,9 +4,16 @@
     <td>@problem</td>
     <td>@user</td>
     <td>
-        <div class="technicalAndButton">
+        <div class="technicalAndButton dropdown">
             <h1>@tecnico</h1>
-            <button>V</button>
+            <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">V</button>
+            <ul class="dropdown-menu">
+                <li> <span class="dropdown-item">Allan</span> </li>
+                <li> <span class="dropdown-item">Kaleb</span> </li>
+                <li> <span class="dropdown-item">Igor</span> </li>
+                <li> <span class="dropdown-item">Miguel</span> </li>
+                <li> <span class="dropdown-item">Matheus</span> </li>
+            </ul>
         </div>
     </td>
     <td>@priority</td>

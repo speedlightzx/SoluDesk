@@ -31,4 +31,24 @@
     width: 10%;
     height: 21px;
     font-size: 10px;
+    border: 2px solid #0052B4;
+    color: #0052B4;
+    background: transparent;
+}
+
+.technicalAndButton button:hover {
+    background: #0052B4;
+    color: white;
+    font-weight: bold;
+}
+
+.dropdown-menu {
+    border-radius: 15px;
+    border: 2px solid #0052B4;
+    text-align: center;
+    list-style: none;
+}
+
+.dropdown-toggle::after {
+    display: none !important;
 }
