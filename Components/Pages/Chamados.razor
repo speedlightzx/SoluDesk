@@ -23,16 +23,21 @@
     @if(showMyChamados) {
     <aside class="chamadosSidebar">
         <ul>
-            <UserChamado username="componente" selected="@selectedChamadoUsername" problemDescription="teste componente" OnSelected="selectChamado"></UserChamado>
-            <UserChamado username="pedro" selected="@selectedChamadoUsername" problemDescription="teste pedro" OnSelected="selectChamado"></UserChamado>
-            <UserChamado username="joao" selected="@selectedChamadoUsername" problemDescription="teste joao" OnSelected="selectChamado"></UserChamado>
-            <UserChamado username="arthur" selected="@selectedChamadoUsername" problemDescription="teste arthur" OnSelected="selectChamado"></UserChamado>
-            <UserChamado username="mekkmk12312" selected="@selectedChamadoUsername" problemDescription="teste we213232x" OnSelected="selectChamado"></UserChamado>
+            @foreach (UserChamado chamado in userChamados) 
+            {
+                <UserChamado 
+                username="@chamado.username"
+                problemDescription="@chamado.problemDescription"
+                OnSelected="selectChamado"
+                selected="@selectedChamadoUsername"
+                 />
+            }
         </ul>
         @if(showAtribuirChamado) 
         {
         <div>
-            <div class="atribuirChamado">
+            <div class="atribuirChamado @(atribuirChamado ? "selectAtribuirChamado" : "")"
+            @onclick="clickAtribuirChamado">
                 <h1>Atribuir o chamado</h1>
             </div>   
         </div>
@@ -42,13 +47,34 @@
     {
     <div class="chamadoDescription">
         <div class="chamadoBox">
-            <div class="problem">
-                <p>"Descrição do problema... @problem"</p>
-            </div>
-            <div class="sendResponse">
-                <textarea @bind="response" placeholder="Enviar Resposta"/>
-                <button>Enviar</button>
-            </div>
+            @if(submited && !string.IsNullOrEmpty(selectedTecnico)) {
+                <MessageWithOkButton pressOk="pressedOk" message="Atendimento Distribuido!"/>
+            } else if(atribuirChamado) {
+                <div class="selectNewTecnico">
+                    <h1>Técnicos:</h1>
+                    <ul>
+                        <li class="@verifySelectedTecnico("Igor")" @onclick='() => selectTecnico("Igor")'>Igor</li>
+                        <li class="@verifySelectedTecnico("Kaleb")" @onclick='() => selectTecnico("Kaleb")'>Kaleb</li>
+                        <li class="@verifySelectedTecnico("Allan")" @onclick='() => selectTecnico("Allan")'>Allan</li>
+                        <li class="@verifySelectedTecnico("Matheus")" @onclick='() => selectTecnico("Matheus")'>Matheus</li>
+                        <li class="@verifySelectedTecnico("Guilherme")" @onclick='() => selectTecnico("Guilherme")'>Guilherme</li>
+                        <li class="@verifySelectedTecnico("Miguel")" @onclick='() => selectTecnico("Miguel")'>Miguel</li>
+                        @if(!string.IsNullOrEmpty(selectedTecnico)) 
+                        {
+                        <div class="indicator"></div>
+                        }
+                    </ul>
+                    <button @onclick="submitNewTecnico">Enviar</button>
+                </div>
+            } else if(!string.IsNullOrEmpty(selectedChamadoUsername)){
+                <div class="problem">
+                    <p>"Descrição do problema... @problem"</p>
+                </div>
+                <div class="sendResponse">
+                    <textarea @bind="response" placeholder="Enviar Resposta"/>
+                    <button>Enviar</button>
+                </div>
+            }
         </div>
     </div>
     }
@@ -97,6 +123,15 @@
 </div>
 
 @code {
+    private List<UserChamado> userChamados = new List<UserChamado>() 
+    { 
+        new() { username="componente", problemDescription="teste componente" },
+        new() { username="pedro", problemDescription="teste do pedro" },
+        new() { username="joao", problemDescription="teste joaozera" },
+        new() { username="arthur", problemDescription="teste aruthorr" },
+        new() { username="mekj2nej123n12", problemDescription="teste 331232131312321" } 
+    };
+
     private bool showAtribuirChamado = false;
     private string problem = string.Empty;
     private string response = string.Empty;
@@ -105,8 +140,34 @@
 
     private bool showMyChamados = true;
 
+    private bool atribuirChamado = false;
+
+    private string selectedTecnico = string.Empty;
+
+    private bool submited = false;
+
+    private void selectTecnico(string tec) 
+    {
+        selectedTecnico = tec;
+    }
+
+    private string verifySelectedTecnico(string name) 
+    {
+
+        if(selectedTecnico.ToLower() == name.ToLower()) return "selectedTecnico";
+
+        return "";
+    }
+
+    private void clickAtribuirChamado() 
+    {
+        atribuirChamado = !atribuirChamado;
+    }
+
     private void selectChamado((string problemDescription, string username) data) 
     {
+        atribuirChamado = false;
+        selectedTecnico = string.Empty;
         selectedChamadoUsername = data.username;
         showAtribuirChamado = true;
         problem = data.problemDescription;
@@ -120,5 +181,25 @@
         showAtribuirChamado = false;
         selectedChamadoUsername = string.Empty;
         showMyChamados = !showMyChamados;
+    }
+
+    private void submitNewTecnico()
+    {
+        if(string.IsNullOrEmpty(selectedTecnico)) return;
+
+        var chamado = userChamados.Find(c => c.username == selectedChamadoUsername);
+        userChamados.Remove(chamado!);
+        submited = true;
+    }
+
+    private void pressedOk() 
+    {
+        submited = false;
+        atribuirChamado = false;
+        selectedTecnico = string.Empty;
+        selectedChamadoUsername = string.Empty;
+        showAtribuirChamado = false;
+        problem = string.Empty;
+        response = string.Empty;
     }
 }

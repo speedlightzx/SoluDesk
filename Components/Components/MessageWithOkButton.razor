@@ -1,0 +1,20 @@
+@using System.ComponentModel.DataAnnotations
+<div>
+
+    <h1>@message</h1>
+    <button @onclick="pressOk">Ok</button>
+
+</div>
+
+@code {
+
+    [Required]
+    [EditorRequired]
+    [Parameter]
+    public string message { get; set; }
+
+    [Required]
+    [EditorRequired]
+    [Parameter]
+    public EventCallback pressOk { get; set; }
+}
