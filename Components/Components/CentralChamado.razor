@@ -1,0 +1,40 @@
+@using System.ComponentModel.DataAnnotations
+<tr>
+    <td>@status</td>
+    <td>@problem</td>
+    <td>@user</td>
+    <td>
+        <div class="technicalAndButton">
+            <h1>@tecnico</h1>
+            <button>V</button>
+        </div>
+    </td>
+    <td>@priority</td>
+</tr>
+
+@code {
+    [Parameter]
+    [EditorRequired] 
+    [Required]
+    public string status { get; set; }
+
+    [Parameter]
+    [EditorRequired] 
+    [Required]
+    public string problem { get; set; }
+
+    [Parameter]
+    [EditorRequired] 
+    [Required]
+    public string user { get; set; }
+
+    [Parameter]
+    [EditorRequired] 
+    [Required]
+    public string tecnico { get; set; }
+
+    [Parameter]
+    [EditorRequired] 
+    [Required]
+    public string priority { get; set; }
+}

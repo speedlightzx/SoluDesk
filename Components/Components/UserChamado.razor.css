@@ -2,15 +2,21 @@
     border-bottom: 2px solid white;
     display: flex;
     width: 100%;
-    font-family: sans-serif;
     justify-content: center;
-    color: white;
-    font-size: 10px;
     padding: 4px 0px 4px 0px;
     cursor: pointer;
 }
 
+h1 {
+    color: white;
+    font-size: 16px;
+    font-family: sans-serif;
+}
+
 .selectedChamado {
     background: white;
+}
+
+.selectedChamado h1 {
     color: #0052B4;
 }
