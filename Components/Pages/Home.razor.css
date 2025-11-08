@@ -66,6 +66,10 @@
     cursor: pointer;
 }
 
+.termsAndUse p:hover {
+    text-decoration: underline;
+}
+
 /* NAO ENCONTROU O QUE PRECISAVA */
 
 .problemNotFound {
@@ -131,6 +135,7 @@
 
 .support div input::placeholder {
     color: #0052B4;
+    font-family: sans-serif;
     font-weight: lighter;
 }
 
@@ -138,7 +143,7 @@
     margin-top: 15px;
     max-width: 12vh;
     width: 100%;
-    border: 2.7px solid #0052B4;
+    border: 2.7px solid transparent;
     border-radius: 15px;
     background: #0052B4;
     padding: 7px 0px 7px 0px;
@@ -146,4 +151,9 @@
     font-family: sans-serif;
     font-size: 20px;
     cursor: pointer;
+    transition: all 0.3s;
+}
+
+.support button:hover {
+    background: #003b83;
 }
