@@ -1,0 +1,39 @@
+@page "/problem"
+@inject NavigationManager navigationManager
+@rendermode InteractiveServer
+
+<Header></Header>
+
+<div class="containerPrincipal">
+
+    <div class="comeBack">
+        <img src="/images/seta.png" alt="" @onclick="redirect">
+    </div>
+    <div class="problemBox">
+        <h1>@problemTitle</h1>
+        <div class="problemDescription">
+            <p>@problemDescription</p>
+        </div>
+        <div class="utilButtons">
+            <button>Essa resposta foi útil.</button>
+            <button>Essa resposta não foi útil.</button>
+        </div>
+    </div>
+
+</div>
+
+@code {
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "problemTitle")]
+    public string? problemTitle { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "problemDescription")]
+    public string? problemDescription { get; set; }
+
+    public void redirect()
+    {
+        navigationManager.NavigateTo("/home");
+    }
+}

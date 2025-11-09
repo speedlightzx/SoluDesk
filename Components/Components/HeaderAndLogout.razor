@@ -1,9 +1,18 @@
+@inject NavigationManager navigationManager
+
 <header>
 
     <h1>SoluDesk</h1>
 
-    <button>
+    <button @onclick="logout">
         Log out
     </button>
 
 </header>
+
+@code {
+    private void logout()
+    {
+        navigationManager.NavigateTo("/");
+    }
+}

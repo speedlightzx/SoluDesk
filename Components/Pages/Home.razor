@@ -1,5 +1,6 @@
 @page "/home"
-
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
 
 <HeaderAndLogout></HeaderAndLogout>
 
@@ -9,8 +10,22 @@
         <div class="search">
             <label>Como podemos ajudar?</label>
             <div>
-                <input type="text">
+                <input type="text" @bind="@inputText">
                 <img src="/images/searchIcon.png" alt="search">
+            </div>
+            <div class="suggestions">
+                @if(!string.IsNullOrEmpty(inputText)) {
+                    <ul class="list-group">
+                        @foreach (var suggestion in searchSuggestions) 
+                        {
+                            <li @onclick="() => selectSuggestion(suggestion.title, suggestion.description)" 
+                            class="list-group-item"
+                            >
+                            @suggestion.title
+                            </li>
+                        }
+                    </ul>
+                }
             </div>
         </div>
         <div class="termsAndUse">
@@ -19,7 +34,7 @@
         </div>
     </div>
 
-    <form class="problemNotFound" method="post">
+    <form class="problemNotFound" method="get">
     
         <h1 class="notFoundText">Não encontrou o que precisava?</h1>
         <div class="support">
@@ -35,3 +50,21 @@
     </form>
 
 </div>
+
+@code {
+    private string inputText = string.Empty;
+
+    private List<(string title, string description)> searchSuggestions = new List<(string title, string description)>() 
+    { 
+        new() { title="Meu computador não está dando video", description="tentei ligar meu computador porém ele nao deu nenhum sinal de video, tentei reiniciar e tambem nao deu certo" },
+        new() { title="nao consigo fazer login com o email corporativo", description="tentei fazer login hoje cedo e deu senha invalida, trocaram minha senha?" },
+        new() { title="meu computador esta dando problema", description="tentei ligar meu computador porem ele nao liga" },
+        new() { title="internet ruim", description="a internet esta extremamente lenta, ontem nao estava assim" },
+        new() { title="nao estou conseguindo acessar a internet", description="minha internet nao esta acessando a internet o que eu faco" }
+    };
+
+    private void selectSuggestion(string title, string description)
+    {
+        NavigationManager.NavigateTo($"/problem?problemTitle={title}&problemDescription={description}");
+    }
+}

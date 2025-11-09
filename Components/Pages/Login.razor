@@ -1,4 +1,6 @@
 ﻿@page "/"
+@rendermode InteractiveServer
+@inject NavigationManager navigationManager
 
 <Header></Header>
 
@@ -8,7 +10,7 @@
 
     <h1>Login</h1>
 
-    <form>
+    <form onsubmit="@redirect">
         <input type="email" placeholder="E-mail:">
         <input type="password" placeholder="Senha:">
 
@@ -19,3 +21,10 @@
 
     <p>Termos de uso</p>
 </div>
+
+@code {
+    private void redirect()
+    {
+        navigationManager.NavigateTo("/home");
+    }
+}

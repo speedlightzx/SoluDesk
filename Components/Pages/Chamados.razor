@@ -1,5 +1,6 @@
 @page "/chamados"
 @rendermode InteractiveServer
+@inject NavigationManager navigationManager
 
 <header>
     <div class="buttons">
@@ -15,7 +16,7 @@
     </div>
 
     <div class="logout">
-        <button>Log out</button>
+        <button @onclick="logout">Log out</button>
     </div>
 </header>
 
@@ -47,8 +48,8 @@
     {
     <div class="chamadoDescription">
         <div class="chamadoBox">
-            @if(submited && !string.IsNullOrEmpty(selectedTecnico)) {
-                <MessageWithOkButton pressOk="pressedOk" message="Atendimento Distribuido!"/>
+            @if(submited && !string.IsNullOrEmpty(message)) {
+                <MessageWithOkButton pressOk="pressedOk" message="@message"/>
             } else if(atribuirChamado) {
                 <div class="selectNewTecnico">
                     <h1>Técnicos:</h1>
@@ -72,7 +73,7 @@
                 </div>
                 <div class="sendResponse">
                     <textarea @bind="response" placeholder="Enviar Resposta"/>
-                    <button>Enviar</button>
+                    <button @onclick="submitChamado">Enviar</button>
                 </div>
             }
         </div>
@@ -125,11 +126,13 @@
 @code {
     private List<UserChamado> userChamados = new List<UserChamado>() 
     { 
-        new() { username="componente", problemDescription="teste componente" },
-        new() { username="pedro", problemDescription="teste do pedro" },
-        new() { username="joao", problemDescription="teste joaozera" },
-        new() { username="arthur", problemDescription="teste aruthorr" },
-        new() { username="mekj2nej123n12", problemDescription="teste 331232131312321" } 
+        new() { username="ricardo", problemDescription="meu pc fica dando tela azul direto, o que eu faço" },
+        new() { username="pedro", problemDescription="nao consigo fazer login no site" },
+        new() { username="joao", problemDescription="internet ta mt ruim, nao sei mais oq fazer" },
+        new() { username="arthur", problemDescription="nao to conseguindo abrir meu email" },
+        new() { username="mekj2nej123n12", problemDescription="teste 331232131312321" },
+        new() { username="3m21kmsi1ji31", problemDescription="mkmk312x021" },
+        new() { username="554555", problemDescription="nxfgbxf 31233smk1mk31m2k3xqw" } 
     };
 
     private bool showAtribuirChamado = false;
@@ -145,6 +148,8 @@
     private string selectedTecnico = string.Empty;
 
     private bool submited = false;
+
+    private string message = string.Empty;
 
     private void selectTecnico(string tec) 
     {
@@ -185,10 +190,11 @@
 
     private void submitNewTecnico()
     {
-        if(string.IsNullOrEmpty(selectedTecnico)) return;
+        if(string.IsNullOrEmpty(selectedTecnico) || string.IsNullOrEmpty(selectedChamadoUsername)) return;
 
         var chamado = userChamados.Find(c => c.username == selectedChamadoUsername);
         userChamados.Remove(chamado!);
+        message = "Atendimento Distribuido!";
         submited = true;
     }
 
@@ -201,5 +207,21 @@
         showAtribuirChamado = false;
         problem = string.Empty;
         response = string.Empty;
+        message = string.Empty;
+    }
+
+    private void submitChamado() 
+    {
+        if(string.IsNullOrEmpty(selectedChamadoUsername)) return;
+
+        var chamado = userChamados.Find(c => c.username == selectedChamadoUsername);
+        userChamados.Remove(chamado!);
+        message = "Atendimento Realizado!";
+        submited = true;
+    }
+
+    private void logout()
+    {
+        navigationManager.NavigateTo("/");
     }
 }

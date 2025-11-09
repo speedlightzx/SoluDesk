@@ -296,11 +296,11 @@ header {
 }
 
 .selectNewTecnico ul li:nth-child(1).selectedTecnico ~ .indicator {
-    transform: translateY(calc(-9.8vh));
+    transform: translateY(calc(-9.3vh));
 }
 
 .selectNewTecnico ul li:nth-child(2).selectedTecnico ~ .indicator {
-    transform: translateY(calc(-6vh));
+    transform: translateY(calc(-5.7vh));
 }
 
 .selectNewTecnico ul li:nth-child(3).selectedTecnico ~ .indicator {
@@ -312,9 +312,9 @@ header {
 }
 
 .selectNewTecnico ul li:nth-child(5).selectedTecnico ~ .indicator {
-    transform: translateY(calc(5.8vh));
+    transform: translateY(calc(5.7vh));
 }
 
 .selectNewTecnico ul li:nth-child(6).selectedTecnico ~ .indicator {
-    transform: translateY(calc(9.8vh));
+    transform: translateY(calc(9.3vh));
 }
