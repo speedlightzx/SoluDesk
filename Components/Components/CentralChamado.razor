@@ -1,4 +1,9 @@
 @using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject IHttpClientFactory httpClient
+@inject ProtectedLocalStorage localStorage
+@inject IJSRuntime js
+
 <tr>
     <td>@status</td>
     <td>@problem</td>
@@ -6,14 +11,18 @@
     <td>
         <div class="technicalAndButton dropdown">
             <h1>@tecnico</h1>
+
+            @if(changeButton) 
+            {
             <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">V</button>
             <ul class="dropdown-menu">
-                <li> <span class="dropdown-item @verifySelectedTecnico("Allan")">Allan</span> </li>
-                <li> <span class="dropdown-item @verifySelectedTecnico("Kaleb")">Kaleb</span> </li>
-                <li> <span class="dropdown-item @verifySelectedTecnico("Igor")">Igor</span> </li>
-                <li> <span class="dropdown-item @verifySelectedTecnico("Miguel")">Miguel</span> </li>
-                <li> <span class="dropdown-item @verifySelectedTecnico("Matheus")">Matheus</span> </li>
+                <li> <span @onclick='() => changeTechnical("Allan")' class="dropdown-item @verifySelectedTecnico("Allan")">Allan</span> </li>
+                <li> <span @onclick='() => changeTechnical("Kaleb")' class="dropdown-item @verifySelectedTecnico("Kaleb")">Kaleb</span> </li>
+                <li> <span @onclick='() => changeTechnical("Igor")' class="dropdown-item @verifySelectedTecnico("Igor")">Igor</span> </li>
+                <li> <span @onclick='() => changeTechnical("Miguel")' class="dropdown-item @verifySelectedTecnico("Miguel")">Miguel</span> </li>
+                <li> <span @onclick='() => changeTechnical("Matheus")' class="dropdown-item @verifySelectedTecnico("Matheus")">Matheus</span> </li>
             </ul>
+            }
         </div>
     </td>
     <td>@priority</td>
@@ -45,11 +54,46 @@
     [Required]
     public string priority { get; set; }
 
+    [Parameter]
+    [EditorRequired] 
+    [Required]
+    public int id { get; set; }
+
+    [Parameter]
+    [EditorRequired] 
+    [Required]
+    public bool changeButton { get; set; }
+
+    [Parameter]
+    public EventCallback refreshTecnico { get; set; }
+
+    [Parameter]
+    public EventCallback refreshCentral { get; set; }
+
     private string verifySelectedTecnico(string name) 
     {
 
         if(tecnico.ToLower() == name.ToLower()) return "active";
 
         return "";
+    }
+
+    private async Task changeTechnical(string name)
+    {
+
+        var http = httpClient.CreateClient("api");
+
+        var token = await localStorage.GetAsync<string>("session_token");
+        http.DefaultRequestHeaders.Authorization = new(token.Value!);
+
+        var res = await http.PutAsJsonAsync("/chamados/changeTechnical", new
+        {
+            id, tecnico=name
+        });
+
+        if(res.IsSuccessStatusCode) tecnico = name;
+
+        await refreshCentral.InvokeAsync();
+        await refreshTecnico.InvokeAsync();
     }
 }

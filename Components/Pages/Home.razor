@@ -1,6 +1,10 @@
 @page "/home"
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @rendermode InteractiveServer
 @inject NavigationManager NavigationManager
+@inject IHttpClientFactory httpClient
+@inject ProtectedLocalStorage localStorage
+@inject IJSRuntime js
 
 <HeaderAndLogout></HeaderAndLogout>
 
@@ -10,15 +14,15 @@
         <div class="search">
             <label>Como podemos ajudar?</label>
             <div>
-                <input type="text" @bind="@inputText">
+                <input type="text" @onkeypress="detectEnter" @bind="@inputText">
                 <img src="/images/searchIcon.png" alt="search">
             </div>
             <div class="suggestions">
                 @if(!string.IsNullOrEmpty(inputText)) {
                     <ul class="list-group">
-                        @foreach (var suggestion in searchSuggestions) 
+                        @foreach (var suggestion in suggestions) 
                         {
-                            <li @onclick="() => selectSuggestion(suggestion.title, suggestion.description)" 
+                            <li @onclick="() => selectSuggestion(suggestion.title, suggestion.description, suggestion.solution)" 
                             class="list-group-item"
                             >
                             @suggestion.title
@@ -34,17 +38,17 @@
         </div>
     </div>
 
-    <form class="problemNotFound" method="get">
+    <form @onsubmit="submitProblem" class="problemNotFound" method="get">
     
         <h1 class="notFoundText">Não encontrou o que precisava?</h1>
         <div class="support">
             <h1>Envie seu problema para a equipe <br /> de suporte:</h1>
             <div>
-                <input type="email" placeholder="E-mail:">
-                <input type="text" placeholder="Assunto:">
-                <textarea placeholder="Descreva seu problema:" />
+                <input @bind="email" required type="email" placeholder="E-mail:">
+                <input @bind="assunto" required type="text" placeholder="Assunto:">
+                <textarea @bind="problema" required placeholder="Descreva seu problema:" />
             </div>
-            <button type="submit">Enviar</button>
+            <input class="submitButton" disabled=@processing type="submit" value="@(processing ? "Enviando..." : "Enviar")"/>
         </div>
     
     </form>
@@ -54,17 +58,82 @@
 @code {
     private string inputText = string.Empty;
 
-    private List<(string title, string description)> searchSuggestions = new List<(string title, string description)>() 
-    { 
-        new() { title="Meu computador não está dando video", description="tentei ligar meu computador porém ele nao deu nenhum sinal de video, tentei reiniciar e tambem nao deu certo" },
-        new() { title="nao consigo fazer login com o email corporativo", description="tentei fazer login hoje cedo e deu senha invalida, trocaram minha senha?" },
-        new() { title="meu computador esta dando problema", description="tentei ligar meu computador porem ele nao liga" },
-        new() { title="internet ruim", description="a internet esta extremamente lenta, ontem nao estava assim" },
-        new() { title="nao estou conseguindo acessar a internet", description="minha internet nao esta acessando a internet o que eu faco" }
-    };
+    private List<Suggestion> suggestions = new List<Suggestion>();
 
-    private void selectSuggestion(string title, string description)
+    private string email = string.Empty;
+    private string assunto = string.Empty;
+    private string problema = string.Empty;
+
+    private bool processing = false;
+
+    private async Task submitProblem()
     {
-        NavigationManager.NavigateTo($"/problem?problemTitle={title}&problemDescription={description}");
+
+        if(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(assunto) || string.IsNullOrEmpty(problema)) {
+            await js.InvokeVoidAsync("alert", "Você precisa preencher todos os campos!");
+            return;
+        }
+
+        if(processing) return;
+        processing = true;
+
+        var http = httpClient.CreateClient("api");
+
+        var token = await localStorage.GetAsync<string>("session_token");
+        http.DefaultRequestHeaders.Authorization = new(token.Value!);
+
+        var res = await http.PostAsJsonAsync("/sendProblem",
+        new { email, assunto, problema }
+        );
+
+        processing = false;
+        if(res.IsSuccessStatusCode)
+        {
+            await js.InvokeVoidAsync("alert", "O seu chamado foi aberto com sucesso.");
+            email = string.Empty;
+            assunto = string.Empty;
+            problema = string.Empty;
+            return;
+        }
+
+        var errorMessage = await res.Content.ReadFromJsonAsync<sendProblemResponse>();
+        await js.InvokeVoidAsync("alert", errorMessage!.error);
+    }
+
+    private async Task detectEnter(KeyboardEventArgs e)
+    {
+        if(e.Key == "Enter") await SearchSuggestions();
+    }
+
+    private async Task SearchSuggestions() 
+    {
+        var http = httpClient.CreateClient("api");
+
+        var token = await localStorage.GetAsync<string>("session_token");
+        http.DefaultRequestHeaders.Authorization = new(token.Value!);
+
+        var res = await http.PostAsJsonAsync("/suggestions",
+        new { problem=inputText }
+        );
+
+        if(res.IsSuccessStatusCode)
+        {
+            var suggestionResponse = await res.Content.ReadFromJsonAsync<SuggestionResponse>();
+            
+            if(suggestionResponse == null || suggestionResponse.similarProblems.Count == 0) 
+            {
+                suggestions.Clear();
+                if(suggestions.Count == 0 || suggestions.First().title != "Nenhum chamado encontrado") suggestions.Add(new(){ title="Nenhum chamado encontrado" });
+                return;
+            }
+
+            suggestions = suggestionResponse.similarProblems;
+        }
+    }
+
+    private async Task selectSuggestion(string title, string description, string solution)
+    {
+        if(title == "Nenhum chamado encontrado") return;
+        NavigationManager.NavigateTo($"/problem?title={title}&desc={description}&solution={solution}");
     }
 }

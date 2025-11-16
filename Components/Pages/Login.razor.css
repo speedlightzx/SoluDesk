@@ -1,20 +1,41 @@
-.container {
+.containerPrincipal {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    max-height: 80vh;
+    max-height: 85vh;
     height: 100%;
+    overflow-y: hidden;
 }
 
-p {
-    position: absolute;
+.terms {
+    /* position: absolute;
     left: 15px;
-    bottom: 10px;
+    bottom: 10px; */
     color: #0052B4;
     font-family: sans-serif;
     text-decoration: underline;
     cursor: pointer;
+}
+
+.signup {
+    /* position: absolute;
+    right: 15px;
+    bottom: 10px; */
+    color: #0052B4;
+    font-family: sans-serif;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.texts {
+    position: relative;
+    top: 200px;
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .containerLogin {

@@ -1,6 +1,10 @@
 ﻿@page "/cadastro"
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @inject NavigationManager navigationManager
 @rendermode InteractiveServer
+@inject IHttpClientFactory httpClient
+@inject ProtectedLocalStorage localStorage
+@inject IJSRuntime js
 
 <Header></Header>
 
@@ -10,13 +14,13 @@
 
     <h1>Cadastre-se</h1>
 
-    <form @onsubmit="redirect">
+    <form @onsubmit="submit">
 
         <div class="required">
-            <input type="text" placeholder="Nome de usuario:">
-            <input type="email" placeholder="E-mail:">
+            <input @bind="username" type="text" placeholder="Nome de usuario:">
+            <input @bind="email" type="email" placeholder="E-mail:">
             <input type="email" placeholder="Confirmar e-mail:">
-            <input type="password" placeholder="Senha:">
+            <input @bind="senha" type="password" placeholder="Senha:">
             <input type="password" placeholder="Confirmar senha:">
         </div>
 
@@ -27,7 +31,7 @@
 
         <div class="submitButtons">
             <input type="submit" value="Cadastrar">
-            <input type="submit" value="Entrar">
+            <input type="button" @onclick="redirect" value="Entrar">
         </div>
     </form>
     
@@ -35,8 +39,29 @@
 </div>
 
 @code {
+
+    private string email { get; set; } = string.Empty;
+    private string senha { get; set; } = string.Empty;
+    private string username { get; set; } = string.Empty;
+
     private void redirect()
     {
-        navigationManager.NavigateTo("/home");
+        navigationManager.NavigateTo("/");
+    }
+    private async Task submit()
+    {
+        var http = httpClient.CreateClient("api");
+        var res = await http.PostAsJsonAsync("/auth/cadastro",
+        new { email, senha, username }
+        );
+        
+        if(res.IsSuccessStatusCode)
+        {
+            navigationManager.NavigateTo("/");
+            await js.InvokeVoidAsync("alert", "Cadastro realizado com sucesso.");
+        }
+
+        SignupResponse? data = await res.Content.ReadFromJsonAsync<SignupResponse>();
+        await js.InvokeVoidAsync("alert", data!.error);
     }
 }

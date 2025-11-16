@@ -59,7 +59,6 @@
     display: flex;
     flex-direction: column;
     margin-top: 8px;
-    justify-content: center;
 }
 
 .list-group {
@@ -169,9 +168,9 @@
     font-weight: lighter;
 }
 
-.support button {
+.submitButton {
     margin-top: 15px;
-    max-width: 12vh;
+    max-width: 14vh;
     width: 100%;
     border: 2.7px solid transparent;
     border-radius: 15px;
@@ -182,6 +181,11 @@
     font-size: 20px;
     cursor: pointer;
     transition: all 0.3s;
+}
+
+.submitButton:disabled {
+    cursor: not-allowed !important;
+    opacity: 75%;
 }
 
 .support button:hover {

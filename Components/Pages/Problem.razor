@@ -10,10 +10,17 @@
         <img src="/images/seta.png" alt="" @onclick="redirect">
     </div>
     <div class="problemBox">
-        <h1>@problemTitle</h1>
+        <h1>@title</h1>
         <div class="problemDescription">
-            <p>@problemDescription</p>
+            <p>@desc</p>
         </div>
+        @if(!string.IsNullOrEmpty(solution)) 
+        {
+        <div class="solution">
+            <h1>Solução:</h1>
+            <p>@solution</p>
+        </div>
+        }
         <div class="utilButtons">
             <button>Essa resposta foi útil.</button>
             <button>Essa resposta não foi útil.</button>
@@ -25,12 +32,16 @@
 @code {
 
     [Parameter]
-    [SupplyParameterFromQuery(Name = "problemTitle")]
-    public string? problemTitle { get; set; }
+    [SupplyParameterFromQuery(Name = "title")]
+    public string? title { get; set; }
 
     [Parameter]
-    [SupplyParameterFromQuery(Name = "problemDescription")]
-    public string? problemDescription { get; set; }
+    [SupplyParameterFromQuery(Name = "desc")]
+    public string? desc { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "solution")]
+    public string? solution { get; set; }
 
     public void redirect()
     {

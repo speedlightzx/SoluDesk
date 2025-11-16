@@ -1,7 +1,7 @@
 @using System.ComponentModel.DataAnnotations
 @rendermode InteractiveServer
 
-<div class="userChamado @(selected == username ? "selectedChamado" : "")" @onclick="Click">
+<div class="userChamado @(selectedId == id ? "selectedChamado" : "")" @onclick="Click">
     <h1>@username</h1>
 </div>
 
@@ -17,13 +17,23 @@
     public string problemDescription { get; set; }
 
     [Parameter]
-    public EventCallback<(string problemDescription, string username)> OnSelected { get; set; }
+    public EventCallback<(string problemDescription, int selectedId, string email, int id)> OnSelected { get; set; }
 
     [Parameter]
-    public string? selected { get; set; }
+    public int? selectedId { get; set; }
+
+    [Parameter]
+    [EditorRequired] 
+    [Required]
+    public string email { get; set; } = string.Empty;
+    
+    [Parameter]
+    [EditorRequired] 
+    [Required]
+    public int id { get; set; }
 
     private async Task Click() 
     {
-       await OnSelected.InvokeAsync((problemDescription, username));
+       await OnSelected.InvokeAsync((problemDescription, id, email, id));
     }
 }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using SoluDesk.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,11 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddHttpClient();
+
+builder.Services.AddHttpClient("api", client =>
+{
+    client.BaseAddress = new Uri("https://soludesk-backend.shardweb.app/");
+});
 
 var app = builder.Build();
 

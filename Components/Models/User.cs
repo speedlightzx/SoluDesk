@@ -1,0 +1,5 @@
+public class User
+{
+    public string nome { get; set; } = string.Empty;
+    public string email { get; set; } = string.Empty;
+}

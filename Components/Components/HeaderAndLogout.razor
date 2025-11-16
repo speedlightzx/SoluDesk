@@ -1,4 +1,6 @@
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @inject NavigationManager navigationManager
+@inject ProtectedLocalStorage localStorage
 
 <header>
 
@@ -11,8 +13,10 @@
 </header>
 
 @code {
-    private void logout()
+    private async Task logout()
     {
+        await localStorage.DeleteAsync("session_token");
         navigationManager.NavigateTo("/");
+        
     }
 }

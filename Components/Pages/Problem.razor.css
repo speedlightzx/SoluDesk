@@ -47,6 +47,18 @@
     overflow-y: auto;
 }
 
+.solution {
+    font-size: 18px;
+    color: #0052B4;
+    overflow-y: auto;
+}
+
+.solution h1 {
+    font-size: 22px;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
 .utilButtons {
     display: flex;
     gap: 2vh;
