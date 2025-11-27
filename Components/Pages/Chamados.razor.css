@@ -296,25 +296,31 @@ header {
 }
 
 .selectNewTecnico ul li:nth-child(1).selectedTecnico ~ .indicator {
-    transform: translateY(calc(-9.3vh));
+    /* transform: translateY(calc(-9.3vh)); */
+    transform: translateY(-275%);
 }
 
 .selectNewTecnico ul li:nth-child(2).selectedTecnico ~ .indicator {
-    transform: translateY(calc(-5.7vh));
+    /* transform: translateY(calc(-5.7vh)); */
+    transform: translateY(-170%);
 }
 
 .selectNewTecnico ul li:nth-child(3).selectedTecnico ~ .indicator {
-    transform: translateY(calc(-2vh));
+    /* transform: translateY(calc(-2vh)); */
+    transform: translateY(-60%);
 }
 
 .selectNewTecnico ul li:nth-child(4).selectedTecnico ~ .indicator {
-    transform: translateY(calc(1.8vh));
+    /* transform: translateY(calc(1.8vh)); */
+    transform: translateY(55%);
 }
 
 .selectNewTecnico ul li:nth-child(5).selectedTecnico ~ .indicator {
-    transform: translateY(calc(5.7vh));
+    /* transform: translateY(calc(5.7vh)); */
+    transform: translateY(170%);
 }
 
 .selectNewTecnico ul li:nth-child(6).selectedTecnico ~ .indicator {
-    transform: translateY(calc(9.3vh));
+    /* transform: translateY(calc(9.3vh)); */
+    transform: translateY(275%);
 }
